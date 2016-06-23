@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hermes Report</title>
+    <meta name="description" content="Your one stop for all things turf and cattle.">
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <link href="css/main.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ["Employee", "Revenue"],
+          <% employees.each do |employee| %>
+          <%=[employee.name, employee.bonus * 10] %>,
+          <% end  %>
+              ]);
+
+        var options = {
+          title: 'Revenue by Employee'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+  </head>
+  <body>
+    <h1>$<%= money_week %>
+    <table>
+      <tr>
+        <td>Destinations</td>
+        <td>Product</td>
+        <td># of Crates</td>
+        <td>Gross Income</td>
+      <% deliveries.each do |delivery| %>
+      <tr>
+        <td><%=delivery.destination %></td>
+        <td><%=delivery.shipment %></td>
+        <td><%=delivery.crates %></td>
+        <td><%=delivery.money %></td>
+        <% end %>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td>Name</td>
+        <td># of Shipments</td>
+        <td>Total Bonus Earned</td>
+      <% employees.each do |employee| %>
+      <tr>
+        <td><%= employee.name %></td>
+        <td><%= employee.num_shipments %></td>
+        <td><%= employee.bonus %></td>
+        <% end %>
+      </tr>
+    </table>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+
+  </body>
+</html>
