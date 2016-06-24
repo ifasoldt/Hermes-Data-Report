@@ -31,6 +31,7 @@
     </script>
   </head>
   <body>
+    <container-fluid>
     <h1>$<%= money_week %>
     <table>
       <tr>
@@ -52,6 +53,7 @@
         <td>Name</td>
         <td># of Shipments</td>
         <td>Total Bonus Earned</td>
+      </tr>
       <% employees.each do |employee| %>
       <tr>
         <td><%= employee.name %></td>
@@ -60,9 +62,20 @@
         <% end %>
       </tr>
     </table>
+    <table>
+      <tr>
+        <td>Planet</td>
+        <td>Revenue</td>
+      </tr>
+      <% Delivery.group_by_planet(deliveries).each do |hash| %>
+        <td><%= hash[:planet] %></td>
+        <td><%= hash[:revenue] %></td>
+      </tr>
+        <% end %>
+
     <div id="piechart" style="width: 900px; height: 500px;"></div>
 
     <img src="./futurama.gif">
-
+  </container-fluid>
   </body>
 </html>

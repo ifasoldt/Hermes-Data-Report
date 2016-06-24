@@ -13,33 +13,26 @@ class Delivery
     @money = money
   end
 
-#can I use group by and then compact and then reject?
-# def self.planet_money(deliveries)
-def self.money_by_planet(deliveries)
-end
-
-
-
 #attempt #2
-  def self.group_by_planet(deliveries)
-    planet_sales = []
-    planet_hash = []
-    planets = deliveries.collect{|delivery| delivery.destination}.uniq!
-    planets.each do |x|
-      planet_sales << {planet: x, sales: deliveries.select{|delivery| delivery.destination == x}.collect{|delivery| delivery.money}.inject(:+)}
-    end
-  return planet_sales
-  end
+  # def self.group_by_planet(deliveries)
+  #   planet_sales = []
+  #   planet_hash = []
+  #   planets = deliveries.collect{|delivery| delivery.destination}.uniq!
+  #   planets.each do |x|
+  #     planet_sales << {planet: x, sales: deliveries.select{|delivery| delivery.destination == x}.collect{|delivery| delivery.money}.inject(:+)}
+  #   end
+  # return planet_sales
+  # end
 
 #attempt #3
-  # def self.group_by_planet(deliveries)
-  #   bucket = []
-  #   planet_group = deliveries.group_by{|delivery| delivery.destination}
-  #   planet_group.each do |x|
-  #      bucket inject{|sum, x| sum += x.each do |x| }
-  #   end
-  #   return bucket
-  # end
+  def self.group_by_planet(deliveries)
+    revenue_by_planet = []
+    planet_group = deliveries.group_by{|delivery| delivery.destination}
+    planet_group.each do |planet_g|
+        revenue_by_planet << {planet: planet_g[0], revenue: planet_g[1].collect{|x| x.money }.inject(:+)}
+    end
+    return revenue_by_planet
+  end
 
   #
   #   deliveries.each do |delivery|
@@ -85,35 +78,30 @@ parse1 = Parse_data.new(csv_name)
 
 deliveries = parse1.parsed
 
-
-puts deliveries
-puts deliveries[0].inspect
-puts deliveries[0].money
 #Explorer #1: h1 with the total money we made this week
 money_week = deliveries.inject(0){|sum, delivery| sum += delivery.money}
-puts money_week
 #Explorer #2:Table of all Shipments
 all_shipments = deliveries.collect{|delivery| delivery.shipment}
 #Explorer #3: Table of all employees and their number of trips and bonus
 
-puts all_shipments
 
 class Employee
-  attr_accessor :name, :delivery_destination, :deliveries, :num_shipments, :bonus
+  attr_accessor :name, :delivery_destination, :deliveries, :num_shipments, :bonus, :delivery_objects
   def initialize(name, delivery_objects)
+    @delivery_objects = delivery_objects
     @name = name
-    @delivery_destination = delivery_matcher(@name)
+    delivery_matcher
     @deliveries = delivery_objects.select{|delivery| @delivery_destination.include? delivery.destination}
-    @bonus = @deliveries.inject(0){|sum, delivery| sum += delivery.money * 10 / 100 }
+    @bonus = @deliveries.inject(0){|sum, delivery| sum += delivery.money / 10.0 }
     @num_shipments = @deliveries.count
   end
-  def delivery_matcher(a_name)
-    @delivery_destination = ["Earth"] if a_name == "Fry"
-    @delivery_destination = ["Mars"] if a_name == "Amy"
-    @delivery_destination = ["Uranus"] if a_name == "Bender"
-    @delivery_destination = ["Saturn", "Jupiter", "Mercury", "Pluto", "Moon"] if a_name == "Leela"
-    @delivery_destination = [] if a_name != "Bender" || "Amy" || "Fry" || "Leela"
-    end
+  def delivery_matcher
+        @delivery_destination = [] if name != "Fry" || "Amy" || "Bender" || "Leela"
+        @delivery_destination = ["Earth"] if name == "Fry"
+        @delivery_destination = ["Mars"] if name == "Amy"
+        @delivery_destination = ["Uranus"] if name == "Bender"
+        @delivery_destination = ["Saturn", "Jupiter", "Mercury", "Pluto", "Moon"] if name == "Leela"
+  end
 end
 employees = []
 
@@ -123,9 +111,9 @@ employees << Employee.new("Bender", deliveries)
 employees<< Employee.new("Leela", deliveries)
 
 
-puts employees[0].inspect
-#
-# new_file = File.open("report.html", "w+")
-# new_file << ERB.new(File.read("report.erb")).result(binding)
-# new_file.close
+new_file = File.open("report.html", "w+")
+new_file << ERB.new(File.read("report.erb")).result(binding)
+new_file.close
 puts Delivery.group_by_planet(deliveries)
+
+puts employees[0].delivery_objects

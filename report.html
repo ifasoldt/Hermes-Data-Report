@@ -16,13 +16,13 @@
         var data = google.visualization.arrayToDataTable([
           ["Employee", "Revenue"],
           
-          ["Fry", 35000],
+          ["Fry", 35000.0],
           
-          ["Amy", 15000],
+          ["Amy", 15000.0],
           
-          ["Bender", 355600],
+          ["Bender", 355600.0],
           
-          ["Leela", 131290],
+          ["Leela", 131295.0],
           
               ]);
 
@@ -37,6 +37,7 @@
     </script>
   </head>
   <body>
+    <container-fluid>
     <h1>$536895
     <table>
       <tr>
@@ -112,32 +113,72 @@
         <td>Name</td>
         <td># of Shipments</td>
         <td>Total Bonus Earned</td>
+      </tr>
       
       <tr>
         <td>Fry</td>
         <td>2</td>
-        <td>3500</td>
+        <td>3500.0</td>
         
       <tr>
         <td>Amy</td>
         <td>1</td>
-        <td>1500</td>
+        <td>1500.0</td>
         
       <tr>
         <td>Bender</td>
         <td>2</td>
-        <td>35560</td>
+        <td>35560.0</td>
         
       <tr>
         <td>Leela</td>
         <td>5</td>
-        <td>13129</td>
+        <td>13129.5</td>
         
       </tr>
     </table>
+    <table>
+      <tr>
+        <td>Planet</td>
+        <td>Revenue</td>
+      </tr>
+      
+        <td>Earth</td>
+        <td>35000</td>
+      </tr>
+        
+        <td>Moon</td>
+        <td>44500</td>
+      </tr>
+        
+        <td>Mars</td>
+        <td>15000</td>
+      </tr>
+        
+        <td>Uranus</td>
+        <td>355600</td>
+      </tr>
+        
+        <td>Jupiter</td>
+        <td>3451</td>
+      </tr>
+        
+        <td>Pluto</td>
+        <td>2344</td>
+      </tr>
+        
+        <td>Saturn</td>
+        <td>1000</td>
+      </tr>
+        
+        <td>Mercury</td>
+        <td>80000</td>
+      </tr>
+        
+
     <div id="piechart" style="width: 900px; height: 500px;"></div>
 
     <img src="./futurama.gif">
-
+  </container-fluid>
   </body>
 </html>
