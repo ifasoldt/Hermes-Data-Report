@@ -1,5 +1,3 @@
-
-
 require 'csv'
 require 'erb'
 
@@ -39,65 +37,13 @@ class Delivery
     revenue_by_planet
   end
 
-  #
-
-  #   deliveries.each do |delivery|
-  #     if delivery.destination == "Earth"
-  #        earth_deliveries << delivery
-  #     elsif delivery.destination == "Moon"
-  #           moon_deliveries << delivery
-  #     elsif delivery.destination == "Mars"
-  #        mars_deliveries << delivery
-  #     elsif delivery.destination == "Uranus"
-  #         uranus_deliveries << delivery
-  #     elsif delivery.destination == "Saturn"
-  #        saturn_deliveries << delivery
-  #     elsif delivery.destination == "Jupiter"
-  #         jupiter_deliveries << delivery
-  #     elsif delivery.destination == "Pluto"
-  #        pluto_deliveries << delivery
-  #     elsif delivery.destination == "Jupiter"
-  #         mercury_deliveries << mercury
-  #     end
-  #   end
-  #   puts earth_deliveries.inspect
-  #   earth_deliveries.collect{|x| x.money}.inject(:+)
-  # end
 end
 
-# Class objects each hold the parsed data of one csv file.
-# class Parse
-#   attr_accessor :parsed
-#   def parse_data(file_name)
-#     @parsed = []
-#     CSV.foreach(file_name, headers: true, header_converters: :symbol) do |row|
-#       @parsed << Delivery.new(
-#         row[:destination],
-#         row[:shipment],
-#         row[:crates].to_s.to_i,
-#         row[:money].to_s.to_i
-#       )
-#     end
-#   end
-# end
-
-# parse1 = Parse.new
-# parse1.parse_data(csv_name)
 deliveries =[]
-
-# CSV.foreach("planet_express_logs.csv", headers: true, header_converters: :symbol) do |row|
-#   deliveries << Delivery.new(
-#     row[:destination],
-#     row[:shipment],
-#     row[:crates].to_s.to_i,
-#     row[:money].to_s.to_i
-#   )
-# end
 
 CSV.read("planet_express_logs.csv", headers: true, header_converters: :symbol, converters: :numeric).map{|x| Delivery.new(x)}
 
 
-# deliveries = parse1.parsed
 
 # Explorer #1: h1 with the total money we made this week
 money_week = deliveries.inject(0) { |sum, delivery| sum + delivery.money }
