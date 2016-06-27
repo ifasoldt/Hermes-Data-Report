@@ -1,20 +1,19 @@
-#!/usr/bin/ruby
+
 
 require 'csv'
 require 'erb'
 
-# test for pull request
-
-csv_name = ARGV[0].to_s
+# csv_name = ARGV[0].to_s
 # Delivery Class iterations are objects
 # of the rows of the CSV file being brought in.
+
 class Delivery
   attr_accessor :destination, :shipment, :crates, :money
-  def initialize(destination, shipment, crates, money)
-    @destination = destination
-    @shipment = shipment
-    @crates = crates
-    @money = money
+  def initialize(hash)
+    @destination = hash[:destination]
+    @shipment = hash[:shipment]
+    @crates = hash[:crates]
+    @money = hash[:money]
   end
 
   # attempt #2
@@ -67,25 +66,38 @@ class Delivery
 end
 
 # Class objects each hold the parsed data of one csv file.
-class Parse
-  attr_accessor :parsed
-  def parse_data(file_name)
-    @parsed = []
-    CSV.foreach(file_name, headers: true, header_converters: :symbol) do |row|
-      @parsed << Delivery.new(
-        row[:destination],
-        row[:shipment],
-        row[:crates].to_s.to_i,
-        row[:money].to_s.to_i
-      )
-    end
-  end
-end
+# class Parse
+#   attr_accessor :parsed
+#   def parse_data(file_name)
+#     @parsed = []
+#     CSV.foreach(file_name, headers: true, header_converters: :symbol) do |row|
+#       @parsed << Delivery.new(
+#         row[:destination],
+#         row[:shipment],
+#         row[:crates].to_s.to_i,
+#         row[:money].to_s.to_i
+#       )
+#     end
+#   end
+# end
 
-parse1 = Parse.new
-parse1.parse_data(csv_name)
+# parse1 = Parse.new
+# parse1.parse_data(csv_name)
+deliveries =[]
 
-deliveries = parse1.parsed
+# CSV.foreach("planet_express_logs.csv", headers: true, header_converters: :symbol) do |row|
+#   deliveries << Delivery.new(
+#     row[:destination],
+#     row[:shipment],
+#     row[:crates].to_s.to_i,
+#     row[:money].to_s.to_i
+#   )
+# end
+
+CSV.read("planet_express_logs.csv", headers: true, header_converters: :symbol, converters: :numeric).map{|x| Delivery.new(x)}
+
+
+# deliveries = parse1.parsed
 
 # Explorer #1: h1 with the total money we made this week
 money_week = deliveries.inject(0) { |sum, delivery| sum + delivery.money }
@@ -126,5 +138,3 @@ employees << Employee.new('Leela', deliveries)
 new_file = File.open('report.html', 'w+')
 new_file << ERB.new(File.read('report.erb')).result(binding)
 new_file.close
-
-puts employees[1].inspect
