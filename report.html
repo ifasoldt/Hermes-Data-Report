@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Hermes Report</title>
-    <meta name="description" content="Your one stop for all things turf and cattle.">
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -16,18 +15,19 @@
         var data = google.visualization.arrayToDataTable([
           ["Employee", "Revenue"],
           
-          ["Fry", 0],
+          ["Fry", 35000.0],
           
-          ["Amy", 0],
+          ["Amy", 15000.0],
           
-          ["Bender", 0],
+          ["Bender", 355600.0],
           
-          ["Leela", 0],
+          ["Leela", 131295.0],
           
               ]);
 
         var options = {
-          title: 'Revenue by Employee'
+          title: 'Revenue by Employee',
+          backgroundColor: 'none',
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -46,7 +46,7 @@
         <h1 class="text-center color-white">HERMES EARNING REPORT</h1>
       </div>
       <div class="row">
-        <h1 class="col-xs-6 col-xs-offset-3 text-center color-white">Total Revenue Per Week: $0</h1>
+        <h1 class="col-xs-6 col-xs-offset-3 text-center color-white">Total Revenue Per Week: $536895</h1>
       </div>
       <table class="first table row">
         <tr>
@@ -58,6 +58,76 @@
           <td class="table-top-row td-first"># of Crates</td>
           <td class="table-top-row td-first">Gross Income</td>
         
+        </tr>
+        <tr>
+          <td class="td-first">Earth</td>
+          <td class="td-first">Hamburgers</td>
+          <td class="td-first">150</td>
+          <td class="td-first">$30000</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Moon</td>
+          <td class="td-first">Tacos</td>
+          <td class="td-first">33</td>
+          <td class="td-first">$44500</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Earth</td>
+          <td class="td-first">Movies</td>
+          <td class="td-first">34</td>
+          <td class="td-first">$5000</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Mars</td>
+          <td class="td-first">BBQ Sauce</td>
+          <td class="td-first">999</td>
+          <td class="td-first">$15000</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Uranus</td>
+          <td class="td-first">Whiskey</td>
+          <td class="td-first">1000</td>
+          <td class="td-first">$345600</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Jupiter</td>
+          <td class="td-first">Books</td>
+          <td class="td-first">10</td>
+          <td class="td-first">$3451</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Pluto</td>
+          <td class="td-first">Beer</td>
+          <td class="td-first">100</td>
+          <td class="td-first">$2344</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Uranus</td>
+          <td class="td-first">Pizza</td>
+          <td class="td-first">66</td>
+          <td class="td-first">$10000</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Saturn</td>
+          <td class="td-first">Pizza</td>
+          <td class="td-first">26</td>
+          <td class="td-first">$1000</td>
+          
+        </tr>
+        <tr>
+          <td class="td-first">Mercury</td>
+          <td class="td-first">Pizza</td>
+          <td class="td-first">36</td>
+          <td class="td-first">$80000</td>
+          
         </tr>
       </table>
       <div class="row">
@@ -71,23 +141,23 @@
             
             <tr>
               <td class="td-second">Fry</td>
-              <td class="td-second">0</td>
-              <td class="td-second">$0</td>
+              <td class="td-second">2</td>
+              <td class="td-second">$3500.0</td>
               
             <tr>
               <td class="td-second">Amy</td>
-              <td class="td-second">0</td>
-              <td class="td-second">$0</td>
+              <td class="td-second">1</td>
+              <td class="td-second">$1500.0</td>
               
             <tr>
               <td class="td-second">Bender</td>
-              <td class="td-second">0</td>
-              <td class="td-second">$0</td>
+              <td class="td-second">2</td>
+              <td class="td-second">$35560.0</td>
               
             <tr>
               <td class="td-second">Leela</td>
-              <td class="td-second">0</td>
-              <td class="td-second">$0</td>
+              <td class="td-second">5</td>
+              <td class="td-second">$13129.5</td>
               
             </tr>
           </table>
@@ -97,6 +167,38 @@
               <td class="table-top-row td-second">Revenue</td>
             </tr>
             
+              <td class="td-second">Earth</td>
+              <td class="td-second">$35000</td>
+            </tr>
+              
+              <td class="td-second">Moon</td>
+              <td class="td-second">$44500</td>
+            </tr>
+              
+              <td class="td-second">Mars</td>
+              <td class="td-second">$15000</td>
+            </tr>
+              
+              <td class="td-second">Uranus</td>
+              <td class="td-second">$355600</td>
+            </tr>
+              
+              <td class="td-second">Jupiter</td>
+              <td class="td-second">$3451</td>
+            </tr>
+              
+              <td class="td-second">Pluto</td>
+              <td class="td-second">$2344</td>
+            </tr>
+              
+              <td class="td-second">Saturn</td>
+              <td class="td-second">$1000</td>
+            </tr>
+              
+              <td class="td-second">Mercury</td>
+              <td class="td-second">$80000</td>
+            </tr>
+              
           </table>
         </div>
         <div class="col-xs-6">

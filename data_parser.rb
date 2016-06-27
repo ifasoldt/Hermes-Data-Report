@@ -6,14 +6,20 @@ require 'erb'
 # of the rows of the CSV file being brought in.
 
 class Delivery
-  attr_accessor :destination, :shipment, :crates, :money
+  attr_accessor :destination, :shipment, :crates, :money, :pilot
   def initialize(hash)
     @destination = hash[:destination]
     @shipment = hash[:shipment]
     @crates = hash[:crates]
     @money = hash[:money]
+    @pilot = pilot_matcher[destination]
   end
 
+  def pilot_matcher
+    destp = { "Earth" => "Fry", "Mars" => "Amy", "Uranus" => "Bender"}
+    destp.default = "Leela"
+    destp
+  end
   # attempt #2
   # def self.group_by_planet(deliveries)
   #   planet_sales = []
@@ -39,11 +45,7 @@ class Delivery
 
 end
 
-deliveries =[]
-
-CSV.read("planet_express_logs.csv", headers: true, header_converters: :symbol, converters: :numeric).map{|x| Delivery.new(x)}
-
-
+deliveries = CSV.read("planet_express_logs.csv", headers: true, header_converters: :symbol, converters: :numeric).map{|x| Delivery.new(x)}
 
 # Explorer #1: h1 with the total money we made this week
 money_week = deliveries.inject(0) { |sum, delivery| sum + delivery.money }
@@ -60,26 +62,15 @@ class Employee
                 :bonus
   def initialize(name, delivery_objects)
     @name = name
-    delivery_matcher
-    @deliveries = delivery_objects.select { |delivery| @delivery_destination.include? delivery.destination }
+    @deliveries = delivery_objects.select { |delivery| delivery.pilot == name}
     @bonus = @deliveries.inject(0) { |sum, delivery| sum + delivery.money / 10.0 }
     @num_shipments = @deliveries.count
   end
-
-  def delivery_matcher
-    @delivery_destination = 'Earth' if name == 'Fry'
-    @delivery_destination = 'Mars' if name == 'Amy'
-    @delivery_destination = 'Uranus' if name == 'Bender'
-    @delivery_destination = 'Saturn', 'Jupiter', 'Mercury', 'Pluto', 'Moon' if name == 'Leela'
-  end
 end
 
-employees = []
 
-employees << Employee.new('Fry', deliveries)
-employees << Employee.new('Amy', deliveries)
-employees << Employee.new('Bender', deliveries)
-employees << Employee.new('Leela', deliveries)
+roster = ['Fry', 'Amy', 'Bender', 'Leela']
+employees = roster.map{|name| Employee.new(name, deliveries)}
 
 new_file = File.open('report.html', 'w+')
 new_file << ERB.new(File.read('report.erb')).result(binding)
