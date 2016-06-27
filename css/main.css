@@ -1,3 +1,52 @@
-td {
-  padding-left: 25px;
+body {
+  background: url(http://stuffpoint.com/futurama/image/307146-futurama-futurama-banner.jpg) no-repeat;
+  background-size: 100vw;
+  z-index: 50
+ }
+
+.container-fluid {
+margin-top: 230px;
+background-color: #F8BC44;
+}
+
+.first-table {
+  width: 100vw;
+  font-size:20px;
+}
+
+.td-first {
+  padding-right: 35px;
+  background: linear-gradient(185deg, #510D08, #F10D08);
+  border:1px solid white;
+  color: white;
+
+}
+
+.td-second {
+  padding-right: 35px;
+  background: linear-gradient(185deg, #1D98CA, #0A344C);
+  border:1px solid white;
+  color: white;
+}
+
+.color-white {
+  color:white;
+}
+
+.table-top-row {
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+header {
+  color:white;
+}
+
+.table-title{
+  font-family: Helvetica;
+  color:#8E0000;
+}
+
+#piechart {
+  background:linear-gradient(185deg, #1D98CA, #0A344C);
 }

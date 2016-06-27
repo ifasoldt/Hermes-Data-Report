@@ -4,6 +4,8 @@ require 'csv'
 require 'erb'
 
 csv_name = ARGV[0].to_s
+# Delivery Class iterations are objects
+# of the rows of the CSV file being brought in.
 class Delivery
   attr_accessor :destination, :shipment, :crates, :money
   def initialize(destination, shipment, crates, money)
@@ -13,28 +15,31 @@ class Delivery
     @money = money
   end
 
-#attempt #2
+  # attempt #2
   # def self.group_by_planet(deliveries)
   #   planet_sales = []
   #   planet_hash = []
   #   planets = deliveries.collect{|delivery| delivery.destination}.uniq!
   #   planets.each do |x|
-  #     planet_sales << {planet: x, sales: deliveries.select{|delivery| delivery.destination == x}.collect{|delivery| delivery.money}.inject(:+)}
+  #   planet_sales << {planet: x, sales: deliveries.select{|delivery| delivery.destination == x}.collect{|delivery| delivery.money}.inject(:+)}
   #   end
   # return planet_sales
   # end
 
-#attempt #3
   def self.group_by_planet(deliveries)
     revenue_by_planet = []
-    planet_group = deliveries.group_by{|delivery| delivery.destination}
+    planet_group = deliveries.group_by(&:destination)
     planet_group.each do |planet_g|
-        revenue_by_planet << {planet: planet_g[0], revenue: planet_g[1].collect{|x| x.money }.inject(:+)}
+      revenue_by_planet << {
+        planet: planet_g[0],
+        revenue: planet_g[1].collect(&:money).inject(:+)
+      }
     end
-    return revenue_by_planet
+    revenue_by_planet
   end
 
   #
+
   #   deliveries.each do |delivery|
   #     if delivery.destination == "Earth"
   #        earth_deliveries << delivery
@@ -57,63 +62,67 @@ class Delivery
   #   puts earth_deliveries.inspect
   #   earth_deliveries.collect{|x| x.money}.inject(:+)
   # end
-  #method that returns array or hash with variables that say what each person gets
 end
 
-
-
-
-class Parse_data
+# Class objects each hold the parsed data of one csv file.
+class Parse
   attr_accessor :parsed
-  def initialize(x)
+  def parse_data(file_name)
     @parsed = []
-    CSV.foreach(x, headers: true, header_converters: :symbol) do |row|
-      @parsed << Delivery.new(row[:destination], row[:shipment], row[:crates].to_s.to_i, row[:money].to_s.to_i)
-      end
+    CSV.foreach(file_name, headers: true, header_converters: :symbol) do |row|
+      @parsed << Delivery.new(
+        row[:destination],
+        row[:shipment],
+        row[:crates].to_s.to_i,
+        row[:money].to_s.to_i
+      )
     end
+  end
 end
 
-parse1 = Parse_data.new(csv_name)
-
+parse1 = Parse.new
+parse1.parse_data(csv_name)
 
 deliveries = parse1.parsed
 
-#Explorer #1: h1 with the total money we made this week
-money_week = deliveries.inject(0){|sum, delivery| sum += delivery.money}
-#Explorer #2:Table of all Shipments
-all_shipments = deliveries.collect{|delivery| delivery.shipment}
-#Explorer #3: Table of all employees and their number of trips and bonus
+# Explorer #1: h1 with the total money we made this week
+money_week = deliveries.inject(0) { |sum, delivery| sum + delivery.money }
+# Explorer #2:Table of all Shipments
+all_shipments = deliveries.collect(&:shipment)
+# Explorer #3: Table of all employees and their number of trips and bonus
 
-
+# Class objects will organize that CSV data around each employee.
 class Employee
-  attr_accessor :name, :delivery_destination, :deliveries, :num_shipments, :bonus, :delivery_objects
+  attr_accessor :name,
+                :delivery_destination,
+                :deliveries,
+                :num_shipments,
+                :bonus
   def initialize(name, delivery_objects)
-    @delivery_objects = delivery_objects
     @name = name
     delivery_matcher
-    @deliveries = delivery_objects.select{|delivery| @delivery_destination.include? delivery.destination}
-    @bonus = @deliveries.inject(0){|sum, delivery| sum += delivery.money / 10.0 }
+    @deliveries = delivery_objects.select { |delivery| @delivery_destination.include? delivery.destination }
+    @bonus = @deliveries.inject(0) { |sum, delivery| sum + delivery.money / 10.0 }
     @num_shipments = @deliveries.count
   end
+
   def delivery_matcher
-        @delivery_destination = [] if name != "Fry" || "Amy" || "Bender" || "Leela"
-        @delivery_destination = ["Earth"] if name == "Fry"
-        @delivery_destination = ["Mars"] if name == "Amy"
-        @delivery_destination = ["Uranus"] if name == "Bender"
-        @delivery_destination = ["Saturn", "Jupiter", "Mercury", "Pluto", "Moon"] if name == "Leela"
+    @delivery_destination = 'Earth' if name == 'Fry'
+    @delivery_destination = 'Mars' if name == 'Amy'
+    @delivery_destination = 'Uranus' if name == 'Bender'
+    @delivery_destination = 'Saturn', 'Jupiter', 'Mercury', 'Pluto', 'Moon' if name == 'Leela'
   end
 end
+
 employees = []
 
-employees << Employee.new("Fry", deliveries)
-employees << Employee.new("Amy", deliveries)
-employees << Employee.new("Bender", deliveries)
-employees<< Employee.new("Leela", deliveries)
+employees << Employee.new('Fry', deliveries)
+employees << Employee.new('Amy', deliveries)
+employees << Employee.new('Bender', deliveries)
+employees << Employee.new('Leela', deliveries)
 
-
-new_file = File.open("report.html", "w+")
-new_file << ERB.new(File.read("report.erb")).result(binding)
+new_file = File.open('report.html', 'w+')
+new_file << ERB.new(File.read('report.erb')).result(binding)
 new_file.close
-puts Delivery.group_by_planet(deliveries)
 
-puts employees[0].delivery_objects
+puts employees[1].inspect
