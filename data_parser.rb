@@ -20,16 +20,6 @@ class Delivery
     destp.default = "Leela"
     destp
   end
-  # attempt #2
-  # def self.group_by_planet(deliveries)
-  #   planet_sales = []
-  #   planet_hash = []
-  #   planets = deliveries.collect{|delivery| delivery.destination}.uniq!
-  #   planets.each do |x|
-  #   planet_sales << {planet: x, sales: deliveries.select{|delivery| delivery.destination == x}.collect{|delivery| delivery.money}.inject(:+)}
-  #   end
-  # return planet_sales
-  # end
 
   def self.group_by_planet(deliveries)
     revenue_by_planet = []
