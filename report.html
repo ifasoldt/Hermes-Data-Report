@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Hermes Report</title>
-    <meta name="description" content="Your one stop for all things turf and cattle.">
     <meta name="viewport" content="width=device-width, initial-scale=1" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
@@ -18,16 +17,17 @@
           
           ["Fry", 35000.0],
           
+          ["Leela", 131295.0],
+          
           ["Amy", 15000.0],
           
           ["Bender", 355600.0],
           
-          ["Leela", 131295.0],
-          
               ]);
 
         var options = {
-          title: 'Revenue by Employee'
+          title: 'Revenue by Employee',
+          backgroundColor: 'none',
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -145,6 +145,11 @@
               <td class="td-second">$3500.0</td>
               
             <tr>
+              <td class="td-second">Leela</td>
+              <td class="td-second">5</td>
+              <td class="td-second">$13129.5</td>
+              
+            <tr>
               <td class="td-second">Amy</td>
               <td class="td-second">1</td>
               <td class="td-second">$1500.0</td>
@@ -153,11 +158,6 @@
               <td class="td-second">Bender</td>
               <td class="td-second">2</td>
               <td class="td-second">$35560.0</td>
-              
-            <tr>
-              <td class="td-second">Leela</td>
-              <td class="td-second">5</td>
-              <td class="td-second">$13129.5</td>
               
             </tr>
           </table>
