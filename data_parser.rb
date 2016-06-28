@@ -58,9 +58,7 @@ class Employee
   end
 end
 
-
-roster = ['Fry', 'Amy', 'Bender', 'Leela']
-employees = roster.map{|name| Employee.new(name, deliveries)}
+employees = deliveries.collect{|x| x.pilot}.uniq.map{|name| Employee.new(name, deliveries)}
 
 new_file = File.open('report.html', 'w+')
 new_file << ERB.new(File.read('report.erb')).result(binding)
